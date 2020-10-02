@@ -1,3 +1,9 @@
+HDMI-CEC allows you to control items linked up by HDMI cables using the same remote control.  
+So for example if you have a DreamBox (TV / Satellite / Cable box) your TV remote could control the box when you switch to that HDMI port.
+
+The DreamBox DM8000 is (was ?) a great box but as it had a DVI port rather than a HDMI port people have always said HDMI-CEC was not possible.
+I have writen this guide and included my script to show with a USB interface like the Pulsa-Eight HDMI-USB plug you can make this work.
+
 #How to setup HDMI CEC commands on a DreamBox DM8000
 
 
@@ -84,13 +90,12 @@ wget -O /dev/null 'http://127.0.0.1/api/remotecontrol?type=long&command=400'
 so now you can run it with a command like this :
 cec-client | ./cec-dm8000.sh
 
-*** It works ***
-
-
 
 
 Notes :
 The idea and the layout of the script came from here :
 https://raspberrypi.stackexchange.com/questions/82847/detect-tv-remote-buttons-being-pressed-with-cec-client
 The libcec did all the rest of the work.  This project just connects the two :)
+I use the Pulse-Eight HDMI-CEC to USB plug : https://www.pulse-eight.com/p/104/usb-hdmi-cec-adapter
+
 
