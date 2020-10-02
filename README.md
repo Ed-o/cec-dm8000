@@ -52,14 +52,15 @@ you can load this by doing
 
 modprobe cdc-acm
 
+to start it on every boot add it to a modules file like :
+/etc/modules-load.d/dreambox-dvb-modules-dm8000.conf
+Just add a line to the bottom that says :
+cdc-acm
 
-
-now you should see a dev / ttyACM0 (or similar)
-
+now you should see a /dev/ttyACM0 (or similar)
 
 
 running:
-
 cec-client
 
 will now find the device and show you the commands from the remote (example press the yellow key):
@@ -81,16 +82,17 @@ I ran the web pages through NetTools and caught the remote control codes and tur
 So as an example - you press 'yellow' and this happens :
 
 "F4(yellow)")
-
-wget -O /dev/null 'http://127.0.0.1/api/remotecontrol?type=long&command=400'
-
-;;
+      wget -O /dev/null 'http://127.0.0.1/api/remotecontrol?type=long&command=400'
+      ;;
 
 
 so now you can run it with a command like this :
 cec-client | ./cec-dm8000.sh
 
-
+This can be set to run automatically using a /etc/init.d/cec file
+and run that on boot up with :
+/etc/rc3.d
+ln -s ../init.d/cec S80cec
 
 Notes :
 The idea and the layout of the script came from here :
