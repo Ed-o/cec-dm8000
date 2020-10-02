@@ -81,6 +81,8 @@ wget -O /dev/null 'http://127.0.0.1/api/remotecontrol?type=long&command=400'
 ;;
 
 
+so now you can run it with a command like this :
+cec-client | ./cec-dm8000.sh
 
 *** It works ***
 
