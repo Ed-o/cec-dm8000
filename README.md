@@ -1,3 +1,9 @@
+HDMI-CEC allows you to control items linked up by HDMI cables using the same remote control.  
+So for example if you have a DreamBox (TV / Satellite / Cable box) your TV remote could control the box when you switch to that HDMI port.
+
+The DreamBox DM8000 is (was ?) a great box but as it had a DVI port rather than a HDMI port people have always said HDMI-CEC was not possible.
+I have writen this guide and included my script to show with a USB interface like the Pulsa-Eight HDMI-USB plug you can make this work.
+
 #How to setup HDMI CEC commands on a DreamBox DM8000
 
 
@@ -46,14 +52,15 @@ you can load this by doing
 
 modprobe cdc-acm
 
+to start it on every boot add it to a modules file like :
+/etc/modules-load.d/dreambox-dvb-modules-dm8000.conf
+Just add a line to the bottom that says :
+cdc-acm
 
-
-now you should see a dev / ttyACM0 (or similar)
-
+now you should see a /dev/ttyACM0 (or similar)
 
 
 running:
-
 cec-client
 
 will now find the device and show you the commands from the remote (example press the yellow key):
@@ -75,22 +82,22 @@ I ran the web pages through NetTools and caught the remote control codes and tur
 So as an example - you press 'yellow' and this happens :
 
 "F4(yellow)")
-
-wget -O /dev/null 'http://127.0.0.1/api/remotecontrol?type=long&command=400'
-
-;;
+      wget -O /dev/null 'http://127.0.0.1/api/remotecontrol?type=long&command=400'
+      ;;
 
 
 so now you can run it with a command like this :
 cec-client | ./cec-dm8000.sh
 
-*** It works ***
-
-
-
+This can be set to run automatically using a /etc/init.d/cec file
+and run that on boot up with :
+/etc/rc3.d
+ln -s ../init.d/cec S80cec
 
 Notes :
 The idea and the layout of the script came from here :
 https://raspberrypi.stackexchange.com/questions/82847/detect-tv-remote-buttons-being-pressed-with-cec-client
 The libcec did all the rest of the work.  This project just connects the two :)
+I use the Pulse-Eight HDMI-CEC to USB plug : https://www.pulse-eight.com/p/104/usb-hdmi-cec-adapter
+
 
