@@ -1,0 +1,42 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          cec-dm8000
+# Required-Start:
+# Should-Start:
+# Required-Stop:
+# Default-Start:     S
+# Default-Stop:
+# Short-Description: Start and stop cec-dm8000
+# Description:       Run the CEC remote control system for DM8000 boxes
+### END INIT INFO
+
+set -e
+
+LOCN=/media/hdd/hdmicec/
+CECLOCN=/usr/bin/cec-client
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+case "$1" in
+    start|restart)
+	echo "starting cec for dm8000"
+	nohup $CECLOCN > $LOCN/cecoutput.log &
+	nohup tail -f $LOCN/cecoutput.log | /media/hdd/hdmicec/cec-dm8000.sh &
+	;;
+    stop)
+	echo "stopping cec for dm8000"
+	killall cec-client
+	killall tail
+	;;
+    status)
+	echo -n "Checking cec for dm8000"
+	ps | grep cec
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart|status}"
+	exit 1
+	;;
+esac
+
+exit 0
+
